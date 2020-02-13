@@ -1,0 +1,41 @@
+function [B] = ControlMatrix222(N,Mu,Sig,Tsig)
+%  function [B] = co
+%  	
+%  	FILE NAME       : Low Pass Filter Design
+%  	DESCRIPTION 	: Impulse response of optimal Low Pass filter 
+%                       as designed by Roark/Escabi.
+%  
+%  	H               : Calculated impulse response
+%  	fc              : Cutoff frequency (in Hz)
+%  	TW              : Transition width (in Hz)
+%  	Fs              : Sampling Frequency (in Hz)
+%  	ATT             : Passband and stopband error (Attenuationin dB)
+%  	Disp            : optional -> 'n' to turn display off
+    
+if length(N)==1
+    X1=1:N(1);
+    B=exp(-((X1-Mu(1)).^2/2./Sig(1).^2))';
+elseif length(N)==2
+    X1 = repmat((1:N(1))',1,N(2));
+    X2 = repmat(1:N(2),N(1),1);
+    B=exp(-((X1-Mu(1)).^2/2./Sig(1).^2+(X2-Mu(2)).^2/2./Sig(2).^2));
+    B=reshape(B,N(1)*N(2),1);           %Convert connection matrix to vector form
+elseif length(N)==3
+    X1 = repmat((1:N(1))',1,N(2),N(3));
+    X2 = repmat(1:N(2),N(1),1,N(3));
+    X3(1,1,:) = 1:N(3);
+    X3 = repmat(X3,N(1),N(2),1);
+    B=exp(-((X1-Mu(1)).^2/2./Sig(1).^2 + (X2-Mu(2)).^2/2./Sig(2).^2 + (X3-Mu(3)).^2/2./Sig(3).^2));
+    B=reshape(B,N(1)*N(2)*N(3),1);      %Convert connection matrix to vector form
+end
+
+%Sparsify the connections by requiring that the Gaussina Connections
+%are within Tsig standard deviations
+if exist('Tsig')
+    i=find(B<exp(-Tsig^2/2));
+    B(i)=zeros(size(i));
+    B=sparse(B);
+end
+
+end
+

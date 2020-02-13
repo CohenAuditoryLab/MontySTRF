@@ -1,0 +1,60 @@
+channel_groups = { 	
+	# Shank index.
+	0:
+		{
+			# List of channels to 
+			#keep for spike detection.
+    			'channels': [14, 0, 12, 2, 15, 1, 8, 6, 11, 5, 9, 7, 13, 3, 10, 4],   
+
+    			# Adjacency graph. 
+			#Dead channels will be automatically discarded
+			#by considering the corresponding subgraph
+			#Channel numbers are offset by 1 so that the numbering
+			#is compatible with Klusta (e.g, 1->0, 2->1 etc)
+              
+			'graph': [ 
+				(14, 0), (0, 14),
+				(0, 12), (12, 0),
+				(12, 2), (2, 12),
+				(2, 15), (15, 2),
+				(15, 1), (1, 15),
+				(1, 8), (8, 1),
+				(8, 6), (6, 8),
+				(6, 11), (11, 6),
+				(11, 5), (5, 11),
+				(5, 9), (9, 5),
+				(9, 7), (7, 9),
+				(7, 13), (13, 7),
+				(13, 3), (3, 13),
+				(3, 10), (10, 3),
+				(10, 4), (4, 10),
+			],
+    
+    			# 2D positions of the channels, 
+			#only for visualization purposes 
+			#in KlustaViewa. The unit doesn't matter.
+			#Channel numbers are offset by 1 so that the numbering
+			#is compatible with Klusta (e.g, 1->0, 2->1 etc)
+    			'geometry' : {
+				 4: (0,0),	#CH 5
+      				10: (0,10),	#CH 11
+    				 3: (0,20),	#CH 4
+  				13: (0,30),	#CH 14
+  				 7: (0,40),	#CH 8
+    				 9: (0,50),	#CH 10
+   				 5: (0,60),	#CH 6
+   				11: (0,70),	#CH 12
+   				 6: (0,80),	#CH 7
+   				 8: (0,90),	#CH 9
+   				 1: (0,100),	#CH 2
+   				15: (0,110),	#CH 16 
+    				 2: (0,120),	#CH 3
+    				12: (0,130),	#CH 13
+  				 0: (0,140),	#CH 1
+				 14: (0,150),	#CH 15
+
+			}
+
+		}
+
+}
